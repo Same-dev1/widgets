@@ -8,16 +8,16 @@ class HobbiesSelectorCard extends StatefulWidget {
   State<HobbiesSelectorCard> createState() => _HobbiesSelectorCardState();
 }
 
-class _Hobby {
+class Hobby {
   final String label;
   final Widget Function(Color color, double size) iconBuilder;
   bool selected;
-  _Hobby(this.label, this.iconBuilder, {this.selected = false});
+  Hobby(this.label, this.iconBuilder, {this.selected = false});
 }
 
 class _HobbiesSelectorCardState extends State<HobbiesSelectorCard> {
-  final Color _chipText = const Color(0xFF111827);
-  final Color _primary = const Color(0xFF0B48EE);
+  final Color chipText = const Color(0xFF111827);
+  final Color primary = const Color(0xFF0B48EE);
 
   final List<Color> _iconPalette = const [
     Color(0xFF2861F4), // blue-600
@@ -37,15 +37,15 @@ class _HobbiesSelectorCardState extends State<HobbiesSelectorCard> {
   final Random _rng = Random();
   final Map<String, Color> _idleIconColors = {};
 
-  late final List<_Hobby> _items = [
-    _Hobby('Music', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedVynil02, color: c, size: s)),
-    _Hobby('Camping', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedHut, color: c, size: s)),
-    _Hobby('Travel', (c, s) => Icon(Icons.airplanemode_active, color: c, size: s), selected: true),
-    _Hobby('Fashion', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedTShirt, color: c, size: s)),
-    _Hobby('Books', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedBookOpen01, color: c, size: s)),
-    _Hobby('Learning', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedMortarboard02, color: c, size: s)),
-    _Hobby('Sports', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedBicycle, color: c, size: s), selected: true),
-    _Hobby('Stocks', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedAppleStocks, color: c, size: s)),
+  late final List<Hobby> hobbies = [
+    Hobby('Music', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedVynil02, color: c, size: s)),
+    Hobby('Camping', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedHut, color: c, size: s)),
+    Hobby('Travel', (c, s) => HugeIcon(icon:HugeIcons.strokeRoundedAirplaneMode, color: c, size: s)),
+    Hobby('Fashion', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedTShirt, color: c, size: s)),
+    Hobby('Books', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedBookOpen01, color: c, size: s)),
+    Hobby('Learning', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedMortarboard02, color: c, size: s)),
+    Hobby('Sports', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedBicycle, color: c, size: s)),
+    Hobby('Stocks', (c, s) => HugeIcon(icon: HugeIcons.strokeRoundedAppleStocks, color: c, size: s)),
   ];
 
   Color _randomPaletteColor() => _iconPalette[_rng.nextInt(_iconPalette.length)];
@@ -80,15 +80,15 @@ class _HobbiesSelectorCardState extends State<HobbiesSelectorCard> {
                   Wrap(
                     spacing: 10,
                     runSpacing: 10,
-                    children: _items.map((h) {
+                    children: hobbies.map((h) {
                       final idle = _idleIconColors.putIfAbsent(h.label, _randomPaletteColor);
-                      return _HobbyChip(
+                      return HobbyChip(
                         label: h.label,
                         iconBuilder: h.iconBuilder,
                         selected: h.selected,
-                        primary: _primary,
-                        chipBg: _primary.withAlpha(20),
-                        chipText: _chipText,
+                        primary: primary,
+                        chipBg: primary.withAlpha(20),
+                        chipText: chipText,
                         idleIconColor: idle,
                         onTap: () {
                           setState(() {
@@ -109,7 +109,7 @@ class _HobbiesSelectorCardState extends State<HobbiesSelectorCard> {
   }
 }
 
-class _HobbyChip extends StatelessWidget {
+class HobbyChip extends StatelessWidget {
   final String label;
   final Widget Function(Color color, double size) iconBuilder;
   final bool selected;
@@ -119,7 +119,8 @@ class _HobbyChip extends StatelessWidget {
   final Color chipText;
   final Color idleIconColor;
 
-  const _HobbyChip({
+  const HobbyChip({
+    super.key, 
     required this.label,
     required this.iconBuilder,
     required this.selected,
