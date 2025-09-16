@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets/widgets/hobbies_selecter.dart';
 import 'package:widgets/widgets/navbar.dart';
 
 void main() {
@@ -14,7 +15,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +22,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Widgets',
       home: Scaffold(
-        body: const Center(
-          child: Text(
-            'Navigation Bar Demo',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: CustomNavBar(
-            currentIndex: _currentIndex,
-            onTap: (int value) {
-              setState(() {
-                _currentIndex = value;
-              });
-            },
-          ),
-        ),
+        body: const HobbiesSelectorCard()
       ),
     );
   }
